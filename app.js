@@ -669,8 +669,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 데이터 행 추가
             items.forEach(item => {
+                // 표본점번호를 숫자로 변환 (변환 불가능한 경우 대비하여 안전 장치 적용)
+                const sampleNoNum = Number(item.sampleNo);
+                const sampleNoVal = isNaN(sampleNoNum) ? item.sampleNo : sampleNoNum;
+
                 const row = [
-                    item.sampleNo,
+                    sampleNoVal,
                     item.date || '',
                     item.leader || '',
                     item.members || '',
@@ -687,7 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const wb = XLSX.utils.book_new();
             const ws = XLSX.utils.aoa_to_sheet(aoaData);
 
-            // 모든 데이터 셀에 가운데 정렬 스타일 적용 (xlsx-js-style 연동)
+            // 모든 데이터 셀에 가운데 정렬 스타일 적용 및 표본점번호 서식 지정
             for (const key in ws) {
                 if (key[0] !== '!') { // !ref, !cols 등 메타 데이터 제외
                     ws[key].s = {
@@ -696,6 +700,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             vertical: 'center'
                         }
                     };
+
+                    // A열(표본점번호)이고 A1(헤더)이 아닌 경우 숫자 서식(z: '0') 적용
+                    if (key.startsWith('A') && key !== 'A1') {
+                        ws[key].z = '0';
+                    }
                 }
             }
 
