@@ -1,0 +1,13 @@
+{
+  "name": "forest-survey-result-table-generator",
+  "version": "1.0.0",
+  "description": "도시산림자원조사 조사결과표 엑셀 생성기 테스트 및 개발 환경",
+  "main": "app.js",
+  "scripts": {
+    "generate-data": "node generate_test_data.js",
+    "serve": "npx -y serve ./"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}
