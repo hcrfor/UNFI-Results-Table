@@ -691,13 +691,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const wb = XLSX.utils.book_new();
             const ws = XLSX.utils.aoa_to_sheet(aoaData);
 
-            // 모든 데이터 셀에 가운데 정렬 스타일 적용 및 표본점번호 서식 지정
+            // 모든 데이터 셀에 가운데 정렬 스타일 적용, 테두리 추가 및 표본점번호 서식 지정
             for (const key in ws) {
                 if (key[0] !== '!') { // !ref, !cols 등 메타 데이터 제외
                     ws[key].s = {
                         alignment: {
                             horizontal: 'center',
                             vertical: 'center'
+                        },
+                        border: {
+                            top: { style: 'thin', color: { rgb: '000000' } },
+                            bottom: { style: 'thin', color: { rgb: '000000' } },
+                            left: { style: 'thin', color: { rgb: '000000' } },
+                            right: { style: 'thin', color: { rgb: '000000' } }
                         }
                     };
 
