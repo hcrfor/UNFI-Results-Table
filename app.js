@@ -585,6 +585,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tr.innerHTML = `
             <td><strong>${item.sampleNo}</strong></td>
             <td>${item.date || '-'}</td>
+            <td>조사가능</td>
             <td>${item.leader || '-'}</td>
             <td>${item.members || '-'}</td>
             <td><span class="badge ${item.excelStatus === 'O' ? 'text-green bg-green-light' : 'text-red bg-red-light'}">${item.excelStatus}</span></td>
@@ -617,6 +618,8 @@ document.addEventListener('DOMContentLoaded', () => {
             addLog('info', '화면을 초기화했습니다. 폴더를 새로 드래그 해주세요.');
         }
     });
+
+
 
     // 10. 통합 결과표 엑셀 파일 생성 및 다운로드 (핵심)
     btnDownload.addEventListener('click', () => {
@@ -655,12 +658,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const headers = [
                 '표본점번호', // A (Index 0)
                 '조사일자',   // B (Index 1)
-                '팀장',       // C (Index 2)
-                '팀원',       // D (Index 3)
-                '엑셀',       // E (Index 4)
-                '사진',       // F (Index 5)
-                '표본점사진', // G (Index 6)
-                '구조물사진'  // H (Index 7)
+                '조사가능불가', // C (Index 2)
+                '팀장',       // D (Index 3)
+                '팀원',       // E (Index 4)
+                '엑셀',       // F (Index 5)
+                '사진',       // G (Index 6)
+                '표본점사진', // H (Index 7)
+                '구조물사진'  // I (Index 8)
             ];
 
             const aoaData = [
@@ -676,6 +680,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const row = [
                     sampleNoVal,
                     item.date || '',
+                    '조사가능', // 조사가능불가
                     item.leader || '',
                     item.members || '',
                     item.excelStatus,
@@ -714,16 +719,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // 시트 서식 및 레이아웃 튜닝 (열 너비 조절 - 8개 열 규격)
+            // 시트 서식 및 레이아웃 튜닝 (열 너비 조절 - 9개 열 규격)
             const colWidths = [
                 { wch: 15 }, // A: 표본점번호
                 { wch: 12 }, // B: 조사일자
-                { wch: 10 }, // C: 팀장
-                { wch: 15 }, // D: 팀원
-                { wch: 8 },  // E: 엑셀
-                { wch: 8 },  // F: 사진
-                { wch: 12 }, // G: 표본점사진
-                { wch: 12 }  // H: 구조물사진
+                { wch: 15 }, // C: 조사가능불가
+                { wch: 10 }, // D: 팀장
+                { wch: 15 }, // E: 팀원
+                { wch: 8 },  // F: 엑셀
+                { wch: 8 },  // G: 사진
+                { wch: 12 }, // H: 표본점사진
+                { wch: 12 }  // I: 구조물사진
             ];
             ws['!cols'] = colWidths;
 
